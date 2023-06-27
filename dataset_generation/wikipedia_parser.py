@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 
 
 FOLDER_PATH = os.getcwd()
-HEADER = {'User-Agent': 'scraping a hundred images for a personal project, contact: thomasrialan@gmail.com'}
+HEADER = {'User-Agent': 'scraping a few hundred images for a personal project, contact: thomasrialan@gmail.com'}
 
 
 def parse_wiki_page(url):
