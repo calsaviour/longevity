@@ -1,4 +1,4 @@
-from wikipedia_parser import parse_wiki_page, _find_dates, _find_year
+from dataset_generation.wikipedia_parser import parse_wiki_page, _find_dates, _find_year
 
 
 def test_parsing_a_page():

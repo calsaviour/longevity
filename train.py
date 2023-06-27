@@ -56,7 +56,7 @@ class FaceAgeModel(nn.Module):
 
 
 if __name__ == '__main__': 
-    image_paths = glob.glob('images/*.jpg')
+    image_paths = glob.glob('dataset/*.jpg')
 
     image_dates = [int(p.split('date:')[-1][:-4]) for p in image_paths]
     death_dates = [int(p.split('death:')[-1][:4]) for p in image_paths]

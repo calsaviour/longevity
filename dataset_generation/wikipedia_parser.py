@@ -12,7 +12,7 @@ def parse_wiki_page(url):
     person_name = url.split('/')[-1]
     rows = _get_info_box_rows(url)
     year_of_birth, year_of_death = _get_year_of_birth_and_death(rows)
-    path = f'{FOLDER_PATH}/images/{person_name}_birth:{year_of_birth}_death:{year_of_death}'
+    path = f'{FOLDER_PATH}/dataset/{person_name}_birth:{year_of_birth}_death:{year_of_death}'
     year_of_img = download_wiki_image(url, path)
     return year_of_birth, year_of_death, year_of_img
 
