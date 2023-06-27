@@ -10,5 +10,3 @@ expectancy of a person based on the picture of their face.
 
 This could be a cool thing people could use to get feedback on their own
 health.
-
-The data was gathered from the [Wikidata SPARQL API](query.wikidata.org).
