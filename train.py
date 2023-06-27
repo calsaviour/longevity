@@ -6,7 +6,7 @@ from torch.utils.data import DataLoader, random_split
 
 from model import FaceAgeDataset, FaceAgeModel
 
-N_EPOCHS = 3
+N_EPOCHS = 30
 
 if __name__ == '__main__': 
     image_paths = glob.glob('dataset/*.jpg')

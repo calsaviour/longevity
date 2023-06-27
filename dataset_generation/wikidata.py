@@ -10,14 +10,14 @@ query = """SELECT ?person ?personLabel ?date_of_birth ?date_of_death ?image ?wik
           wdt:P569 ?date_of_birth;
           wdt:P570 ?date_of_death;
           wdt:P18 ?image;
-  FILTER(YEAR(?date_of_death) = 2023)
+  FILTER(YEAR(?date_of_death) > 1970)
   ?article schema:about ?person;
            schema:isPartOf <https://en.wikipedia.org/>.  
   BIND(IRI(STR(?article)) AS ?wikipedia_url)
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 
   }
-LIMIT 1000"""
+LIMIT 5000"""
 
 
 def get_wikidata():
