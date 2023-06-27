@@ -6,6 +6,7 @@ from wikipedia_parser import download_wiki_image, FOLDER_PATH
 
 if __name__ == '__main__': 
     df = get_wikidata()
+    errors = []
 
     for i in tqdm.tqdm(range(len(df))):
         time.sleep(0.5)
@@ -17,8 +18,10 @@ if __name__ == '__main__':
         try:
             download_wiki_image(url, path)
         except:
-            print(url)
-            import pdb; pdb.set_trace()
+            errors.append(url)
+            print(len(errors))
+
+    print(f'Errors: {len(errors)}')
 
 
 
