@@ -11,6 +11,7 @@ from model import FaceAgeDataset, FaceAgeModel
 
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning, module="PIL")
+warnings.filterwarnings("ignore", category=UserWarning, message=r".*iCCP.*")
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
