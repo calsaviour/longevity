@@ -45,6 +45,7 @@ if __name__ == '__main__':
     train_dataloader = DataLoader(train_dataset, batch_size=1, shuffle=True)
     test_dataloader = DataLoader(test_dataset, batch_size=1, shuffle=False)
 
+    import pdb;pdb.set_trace() 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     model = FaceAgeModel().to(device)
