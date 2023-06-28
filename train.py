@@ -18,6 +18,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 N_EPOCHS = 15
 SEED = 7457769
 LR = 1e-3
+BATCH_SIZE = 32
 TEST_SET_RATIO = 0.2
 
 
@@ -33,7 +34,7 @@ def set_seed(seed):
 def get_dataloaders():
     dataset = _generate_dataset()
     train_dataset, test_dataset = _get_train_test_split(dataset)
-    train_dataloader = DataLoader(train_dataset, batch_size=1, shuffle=True)
+    train_dataloader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True)
     test_dataloader = DataLoader(test_dataset, batch_size=1, shuffle=False)
     return train_dataloader, test_dataloader
 
