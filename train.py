@@ -4,7 +4,7 @@ import torch
 import matplotlib.pyplot as plt
 import random
 import numpy as np
-from torch.utils.data import DataLoader, random_split
+from torch.utils.data import DataLoader, random_split, Subset
 import matplotlib.pyplot as plt
 
 from model import FaceAgeDataset, FaceAgeModel
@@ -30,6 +30,10 @@ def set_seed(seed):
 def get_dataloaders():
     dataset = _generate_dataset()
     train_dataset, test_dataset = _get_train_test_split(dataset)
+    #TEMP
+    print("TEMP: set train dataset size to 500 for data ablation experiment")
+    indices = torch.randperm(len(train_dataset))[:500]
+    train_dataset = Subset(train_dataset, indices)
     train_dataloader = DataLoader(train_dataset, batch_size=1, shuffle=True)
     test_dataloader = DataLoader(test_dataset, batch_size=1, shuffle=False)
     return train_dataloader, test_dataloader
