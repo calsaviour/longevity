@@ -62,7 +62,6 @@ if __name__ == '__main__':
     set_seed(SEED)
     train_dataloader, test_dataloader = get_dataloaders()
 
-    1/0
     model = FaceAgeModel().to(device)
 
     criterion = torch.nn.MSELoss()
