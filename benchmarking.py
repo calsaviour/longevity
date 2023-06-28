@@ -3,6 +3,7 @@ import torch
 from torch.nn import MSELoss
 
 from train import _generate_dataset, _get_train_test_split
+from utils import min_max_scale
 
 
 if __name__ == '__main__': 
@@ -29,6 +30,7 @@ if __name__ == '__main__':
 
     random_guess_loss_on_test = MSELoss()(random_guess_tensor, 
                                           torch.tensor(test_life_expectancies))
+
 
     print(f"Mean guess loss: {mean_guess_loss_on_test}")
     print(f"Random guess loss: {random_guess_loss_on_test}")
