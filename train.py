@@ -2,13 +2,26 @@ import tqdm
 import glob
 import torch
 import matplotlib.pyplot as plt
+import numpy as np
 from torch.utils.data import DataLoader, random_split
 
 from model import FaceAgeDataset, FaceAgeModel
 
 N_EPOCHS = 30
+SEED = 7457769
+
+def set_seed(seed):
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+    np.random.seed(seed)
+    random.seed(seed)
+
 
 if __name__ == '__main__': 
+    set_seed(SEED)
+
     image_paths = glob.glob('dataset/*.jpg')
 
     image_dates = [int(p.split('date:')[-1][:-4]) for p in image_paths]
@@ -24,13 +37,12 @@ if __name__ == '__main__':
     num_test = int(test_ratio * len(dataset))
     num_train = len(dataset) - num_test
 
-    train_dataset, test_dataset = random_split(dataset, [num_train, num_test])
+    train_dataset, test_dataset = random_split(dataset, [num_train, num_test],
+                                               generator=torch.Generator().manual_seed(SEED))
 
     # Define separate data loaders for the training and test sets
     train_dataloader = DataLoader(train_dataset, batch_size=1, shuffle=True)
     test_dataloader = DataLoader(test_dataset, batch_size=1, shuffle=False)
-
-    import pdb;pdb.set_trace() 
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
