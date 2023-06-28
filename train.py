@@ -37,12 +37,15 @@ def get_dataloaders():
 
 def _generate_dataset():
     image_paths = glob.glob('dataset/*.jpg')
-    image_dates = [int(p.split('date:')[-1][:-4]) for p in image_paths]
-    death_dates = [int(p.split('death:')[-1][:4]) for p in image_paths]
-    birth_dates = [int(p.split('birth:')[-1][:4]) for p in image_paths]
-    ages = [img_date - birth_date for img_date, birth_date in zip(image_dates, birth_dates)]
-    life_expectancies = [death - date for death, date in zip(death_dates, image_dates)]
-    dataset = FaceAgeDataset(image_paths, ages, life_expectancies)
+    image_dates = np.array([int(p.split('date:')[-1][:-4]) for p in image_paths])
+    death_dates = np.array([int(p.split('death:')[-1][:4]) for p in image_paths])
+    birth_dates = np.array([int(p.split('birth:')[-1][:4]) for p in image_paths])
+    ages = np.array([img_date - birth_date for img_date, birth_date in zip(image_dates, birth_dates)])
+    life_expectancies = np.array([death - date for death, date in zip(death_dates, image_dates)])
+
+    good_ixs = np.where(life_expectancies > 0)[0]
+
+    dataset = FaceAgeDataset(image_paths[good_ixs], ages[good_ixs], life_expectancies[good_ixs])
     return dataset
 
 
@@ -59,6 +62,7 @@ if __name__ == '__main__':
     set_seed(SEED)
     train_dataloader, test_dataloader = get_dataloaders()
 
+    1/0
     model = FaceAgeModel().to(device)
 
     criterion = torch.nn.MSELoss()
@@ -72,7 +76,7 @@ if __name__ == '__main__':
         # Train
         model.train()
         train_loss = 0
-        for imgs, age, target in tqdm.tqdm(train_dataloader):
+        for imgs, age, life_expectancy, target in tqdm.tqdm(train_dataloader):
             imgs = imgs.to(device)
             age = age.to(device)
             target = target.to(device)

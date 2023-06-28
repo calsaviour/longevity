@@ -12,12 +12,11 @@ def parse_wiki_page(url):
     person_name = url.split('/')[-1]
     rows = _get_info_box_rows(url)
     year_of_birth, year_of_death = _get_year_of_birth_and_death(rows)
-    path = f'{FOLDER_PATH}/dataset/{person_name}_birth:{year_of_birth}_death:{year_of_death}'
-    year_of_img = download_wiki_image(url, path)
+    year_of_img = download_wiki_image(url, year_of_birth, year_of_death, person_name)
     return year_of_birth, year_of_death, year_of_img
 
 
-def download_wiki_image(url, path):
+def download_wiki_image(url, year_of_birth, year_of_death, person_name):
     response = requests.get(url, headers=HEADER)
     assert response.status_code == 200
     data = response.text
@@ -30,24 +29,32 @@ def download_wiki_image(url, path):
     img_url = 'https:' + img.get('src')
     response = requests.get(img_url, stream=True, headers=HEADER)
     response.raise_for_status()
-    img_path = path + f'_date:{year_of_img}.jpg'
-    with open(img_path, 'wb') as out_file:
+    path = f'{FOLDER_PATH}/dataset_v2/{person_name}_birth:{year_of_birth}_death:{year_of_death}_data:{year_of_img}.jpg'
+    assert year_of_img <= year_of_death
+    assert year_of_img >= year_of_birth
+    with open(path, 'wb') as out_file:
         out_file.write(response.content)
     return year_of_img
 
 
 def _get_year_of_image(img):
-    img_caption = img.get('alt')
-    if img_caption is None:
-        subsequent_div = img.find_next_sibling('div')
-        img_caption = subsequent_div.text
-    assert img_caption, "Could not find the image caption."
-    if len(_find_dates(img_caption)):
-        year_of_img = int(_find_dates(img_caption)[0][:4])
-    elif _find_year(img_caption):
-        year_of_img = _find_year(img_caption)
-    assert year_of_img, "Could not find the year of the image."
+    candidate_captions = _get_candidate_captions(img)
+    year_of_img = None
+    for caption in candidate_captions:
+        if _find_year(caption) is not None:
+            year_of_img = _find_year(caption)
+        elif len(_find_dates(caption)) > 0:
+            year_of_img = int(_find_dates(img_caption)[0][:4])
+    assert year_of_img is not None, "Could not find the year of the image."
     return year_of_img
+
+
+def _get_candidate_captions(img):
+    candidate_captions = [img.next_element.text, img.get('alt')]
+    if img.find_next_sibling('div') is not None:
+        candidate_captions = candidate_captions.append(img.find_next_sibling('div').text)
+    return candidate_captions
+
 
 
 def _get_year_of_birth_and_death(rows):
@@ -85,5 +92,6 @@ def _find_dates(input_string):
 
 def _find_year(input_string):
     match = re.search(r'\b(19[0-9]{2}|20[0-9]{2})\b', input_string)
-    assert match, "Could not find a year."
+    if match is None:
+        return None
     return int(match.group())

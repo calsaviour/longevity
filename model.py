@@ -20,7 +20,8 @@ class FaceAgeDataset(Dataset):
     def __init__(self, image_paths, ages, life_expectancies):
         self.image_paths = image_paths
         self.ages = ages
-        self.life_expectancies = min_max_scale(life_expectancies)
+        self.targets = min_max_scale(life_expectancies)
+        self.life_expectancies = life_expectancies
 
     def __len__(self):
         return len(self.image_paths)
@@ -31,9 +32,10 @@ class FaceAgeDataset(Dataset):
         img = preprocess(img)
 
         age = self.ages[idx]
+        target = self.targets[idx]
         life_expectancy = self.life_expectancies[idx]
 
-        return img, torch.tensor([age]).float(), torch.tensor([life_expectancy]).float()
+        return img, torch.tensor([age]).float(), torch.tensor([life_expectancy]).float(), torch.tensor([target]).float()
 
 
 class FaceAgeModel(nn.Module):

@@ -2,8 +2,17 @@ import pytest
 from dataset_generation.wikipedia_parser import parse_wiki_page, _find_dates, _find_year
 
 
-@pytest.mark.skip()
+#@pytest.mark.skip()
 def test_parsing_a_page():
+    url = "https://en.wikipedia.org/wiki/Kenneth_Kaunda"
+    birthyear, deathyear, img_year = parse_wiki_page(url)
+    assert_real_and_parsed_years_match_up(birthyear=1924,
+                                          deathyear=2021,
+                                          img_year=1983,
+                                          parsed_birthyear=birthyear,
+                                          parsed_deathyear=deathyear,
+                                          parsed_img_year=img_year)
+
     url = "https://en.wikipedia.org/wiki/Gord_Brown"
     birthyear, deathyear, img_year = parse_wiki_page(url)
     assert_real_and_parsed_years_match_up(birthyear=1960,
