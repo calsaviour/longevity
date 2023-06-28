@@ -10,8 +10,8 @@ if __name__ == '__main__':
     dataset = _generate_dataset()
     train_dataset, test_dataset = _get_train_test_split(dataset)
 
-    train_life_expectancies = [row[2].item() for row in train_dataset]
-    test_life_expectancies = [row[2].item() for row in test_dataset]
+    train_life_expectancies = [row[3].item() for row in train_dataset]
+    test_life_expectancies = [row[3].item() for row in test_dataset]
 
     #Compute MSE Loss of the mean of the training set
     train_mean_life_expect = np.mean(train_life_expectancies)
