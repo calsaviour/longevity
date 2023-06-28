@@ -2,6 +2,7 @@ import tqdm
 import glob
 import torch
 import matplotlib.pyplot as plt
+import random
 import numpy as np
 from torch.utils.data import DataLoader, random_split
 
@@ -22,7 +23,7 @@ def set_seed(seed):
 if __name__ == '__main__': 
     set_seed(SEED)
 
-    image_paths = glob.glob('dataset/*.jpg')
+    image_paths = glob.glob('dataset/*.jpg')[:20]
 
     image_dates = [int(p.split('date:')[-1][:-4]) for p in image_paths]
     death_dates = [int(p.split('death:')[-1][:4]) for p in image_paths]
