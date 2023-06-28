@@ -93,7 +93,7 @@ if __name__ == '__main__':
         model.eval()
         test_loss = 0
         with torch.no_grad():
-            for imgs, age, target in test_dataloader:
+            for imgs, age, life_expectancy, target in test_dataloader:
                 imgs = imgs.to(device)
                 age = age.to(device)
                 target = target.to(device)
