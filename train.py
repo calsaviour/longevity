@@ -37,7 +37,7 @@ def get_dataloaders():
 
 def _generate_dataset():
     image_paths = glob.glob('datasets/dataset_v2/*.jpg')[:500]
-    image_dates = np.array([int(p.split('date:')[-1][:-4]) for p in image_paths])
+    image_dates = np.array([int(p.split('data:')[-1][:-4]) for p in image_paths])
     death_dates = np.array([int(p.split('death:')[-1][:4]) for p in image_paths])
     birth_dates = np.array([int(p.split('birth:')[-1][:4]) for p in image_paths])
     ages = np.array([img_date - birth_date for img_date, birth_date in zip(image_dates, birth_dates)])
