@@ -8,7 +8,6 @@ from torch.utils.data import DataLoader, random_split
 import matplotlib.pyplot as plt
 
 from model import FaceAgeDataset, FaceAgeModel
-from utils import min_max_scale
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -28,7 +27,15 @@ def set_seed(seed):
     random.seed(seed)
 
 
-def generate_dataset():
+def get_dataloaders():
+    dataset = _generate_dataset()
+    train_dataset, test_dataset = _get_train_test_split(dataset)
+    train_dataloader = DataLoader(train_dataset, batch_size=1, shuffle=True)
+    test_dataloader = DataLoader(test_dataset, batch_size=1, shuffle=False)
+    return train_dataloader, test_dataloader
+
+
+def _generate_dataset():
     image_paths = glob.glob('dataset/*.jpg')
     image_dates = [int(p.split('date:')[-1][:-4]) for p in image_paths]
     death_dates = [int(p.split('death:')[-1][:4]) for p in image_paths]
@@ -39,21 +46,18 @@ def generate_dataset():
     return dataset
 
 
-def get_train_test_split(dataset):
+def _get_train_test_split(dataset):
     num_test = int(TEST_SET_RATIO * len(dataset))
     num_train = len(dataset) - num_test
     train_dataset, test_dataset = random_split(dataset, [num_train, num_test],
                                                generator=torch.Generator().manual_seed(SEED))
-    train_dataloader = DataLoader(train_dataset, batch_size=1, shuffle=True)
-    test_dataloader = DataLoader(test_dataset, batch_size=1, shuffle=False)
-    return train_dataloader, test_dataloader
+    return train_dataset, test_dataset
 
 
 
 if __name__ == '__main__': 
     set_seed(SEED)
-    dataset = generate_dataset()
-    train_dataloader, test_dataloader = get_train_test_split(dataset)
+    train_dataloader, test_dataloader = get_dataloaders()
 
     model = FaceAgeModel().to(device)
 
@@ -97,7 +101,8 @@ if __name__ == '__main__':
         test_losses.append(test_loss)
         
         print(f"Epoch: {epoch+1}, Train Loss: {train_loss / len(train_dataloader)}, Test Loss: {test_loss / len(test_dataloader)}")
+
     plt.plot(train_losses, 'r', label='train_loss')
     plt.plot(test_losses, 'g', label='test_loss')
-    plt.show()
+    plt.savefig('loss.png')
 

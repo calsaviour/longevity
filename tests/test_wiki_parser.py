@@ -1,6 +1,8 @@
+import pytest
 from dataset_generation.wikipedia_parser import parse_wiki_page, _find_dates, _find_year
 
 
+@pytest.mark.skip()
 def test_parsing_a_page():
     url = "https://en.wikipedia.org/wiki/Gord_Brown"
     birthyear, deathyear, img_year = parse_wiki_page(url)

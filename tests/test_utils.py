@@ -8,6 +8,3 @@ def test_min_max_scaling():
     assert np.max(scaled_x) == 1
     assert np.min(scaled_x) == 0
 
-
-def test_converting_rmse_to_age():
-    assert False

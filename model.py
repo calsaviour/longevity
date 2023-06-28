@@ -5,6 +5,7 @@ from torchvision import models, transforms
 import cv2
 import numpy as np
 
+from utils import min_max_scale
 
 # Preprocessing for images
 preprocess = transforms.Compose([
@@ -19,7 +20,7 @@ class FaceAgeDataset(Dataset):
     def __init__(self, image_paths, ages, life_expectancies):
         self.image_paths = image_paths
         self.ages = ages
-        self.life_expectancies = life_expectancies
+        self.life_expectancies = min_max_scale(life_expectancies)
 
     def __len__(self):
         return len(self.image_paths)
