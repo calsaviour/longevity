@@ -36,7 +36,7 @@ def get_dataloaders():
 
 
 def _generate_dataset():
-    image_paths = glob.glob('datasets/dataset_v2/*.jpg')
+    image_paths = np.array(glob.glob('datasets/dataset_v2/*.jpg'))
     image_dates = np.array([int(p.split('data:')[-1][:-4]) for p in image_paths])
     death_dates = np.array([int(p.split('death:')[-1][:4]) for p in image_paths])
     birth_dates = np.array([int(p.split('birth:')[-1][:4]) for p in image_paths])
