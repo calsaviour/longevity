@@ -6,8 +6,9 @@ from wikipedia_parser import download_wiki_image, FOLDER_PATH
 
 
 if __name__ == '__main__': 
-    #df = get_wikidata()
-    df = pd.read_pickle("df_0515.pkl")
+    df = get_wikidata()
+    import pdb;pdb.set_trace() 
+    #df = pd.read_pickle("df_0515.pkl")
     errors = []
 
     for i in tqdm.tqdm(range(len(df))):

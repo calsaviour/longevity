@@ -5,18 +5,19 @@ from SPARQLWrapper import SPARQLWrapper, JSON
 
 
 endpoint_url = "https://query.wikidata.org/sparql"
-query = """SELECT ?person ?personLabel ?date_of_birth ?date_of_death ?image ?wikipedia_url WHERE {
+
+query="""SELECT ?person ?personLabel ?date_of_birth ?date_of_death ?image ?wikipedia_url WHERE {
   ?person wdt:P31 wd:Q5;
           wdt:P569 ?date_of_birth;
           wdt:P570 ?date_of_death;
           wdt:P18 ?image;
-  FILTER(YEAR(?date_of_death) > 2020)
+  FILTER(YEAR(?date_of_death) > 2015)
   ?article schema:about ?person;
            schema:isPartOf <https://en.wikipedia.org/>.  
   BIND(IRI(STR(?article)) AS ?wikipedia_url)
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
   }
-LIMIT 10000"""
+LIMIT 15000"""
 
 def get_wikidata():
     """ returns DF with columns: date of birth, date of death, image link, wikipedia link """

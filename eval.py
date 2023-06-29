@@ -35,7 +35,7 @@ with torch.no_grad():
         output2 = model2(imgs, age)
 
         # Average the predictions of the two models
-        ensemble_output = output1*0.35 + output2 * 0.65
+        ensemble_output = (output1 + output2)/2.0
 
         loss = criterion(ensemble_output, target)
         test_loss += loss.item()
