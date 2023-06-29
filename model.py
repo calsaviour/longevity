@@ -46,6 +46,9 @@ class FaceAgeModel(nn.Module):
         for param in self.cnn.parameters():
             param.requires_grad = False
 
+        for param in self.cnn.layer3.parameters():
+            param.requires_grad = True
+
         for param in self.cnn.layer4.parameters():
             param.requires_grad = True
 
