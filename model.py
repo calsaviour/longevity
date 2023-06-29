@@ -70,6 +70,10 @@ class DenseNetFaceAgeModel(nn.Module):
         for param in self.base_model.parameters():
             param.requires_grad = False
         
+        # Unfreeze the last dense block
+        for param in self.base_model.features.denseblock4.parameters():
+            param.requires_grad = True
+
         self.base_model.classifier = nn.Identity()  # Remove the classifier part of DenseNet
         
         # New layers
