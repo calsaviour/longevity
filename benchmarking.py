@@ -2,11 +2,13 @@ import numpy as np
 import torch
 from torch.nn import MSELoss
 
-from train import _generate_dataset, _get_train_test_split
+from train import _generate_dataset, _get_train_test_split, set_seed, SEED
 from utils import min_max_scale
 
 
 if __name__ == '__main__': 
+    set_seed(SEED)
+
     dataset = _generate_dataset()
     train_dataset, test_dataset = _get_train_test_split(dataset)
 
