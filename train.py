@@ -16,7 +16,7 @@ warnings.simplefilter("ignore")
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-N_EPOCHS = 3
+N_EPOCHS = 15
 SEED = 7457769
 LR = 1e-3 / 3
 BATCH_SIZE = 128
