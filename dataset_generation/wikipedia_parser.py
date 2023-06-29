@@ -29,7 +29,7 @@ def download_wiki_image(url, year_of_birth, year_of_death, person_name):
     img_url = 'https:' + img.get('src')
     response = requests.get(img_url, stream=True, headers=HEADER)
     response.raise_for_status()
-    path = f'{FOLDER_PATH}/dataset_v3/{person_name}_birth:{year_of_birth}_death:{year_of_death}_data:{year_of_img}.jpg'
+    path = f'{FOLDER_PATH}/datasets/dataset_v3/{person_name}_birth:{year_of_birth}_death:{year_of_death}_data:{year_of_img}.jpg'
     assert year_of_img <= year_of_death
     assert year_of_img >= year_of_birth
     with open(path, 'wb') as out_file:
