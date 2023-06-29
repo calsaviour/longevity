@@ -33,7 +33,8 @@ def download_wiki_image(url, year_of_birth, year_of_death, person_name):
     assert year_of_img <= year_of_death
     assert year_of_img >= year_of_birth
     with open(path, 'wb') as out_file:
-        out_file.write(response.content)
+        #out_file.write(response.content)
+        pass
     return year_of_img
 
 

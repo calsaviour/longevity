@@ -21,9 +21,18 @@ if __name__ == '__main__':
 
     max_lex = max(train_life_expectancies)
     min_lex = min(train_life_expectancies)
+
     
-    mean_mse = 0.06292656314531728
-    random_mse = 0.19728467289926574
+    train_images = [train_dataset.dataset.image_paths[i] for i in train_dataset.indices]
+    train_lexs = [train_dataset.dataset.life_expectancies[i] for i in train_dataset.indices]
+    
+
+    def get_pic_year(f):
+        return f.split('data:')[1][:4]
+
+    def get_birth_year(f):
+        return f.split('birth:')[1][:4]
 
 
-
+    ixs = np.array([get_birth_year(f) == get_pic_year(f) for f in train_images])
+    print(sum(ixs))
