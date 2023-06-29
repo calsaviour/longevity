@@ -1,4 +1,5 @@
 import torch
+import tqdm
 from torch.utils.data import DataLoader
 from model import FaceAgeDataset, FaceAgeModel, DenseNetFaceAgeModel
 from train import get_dataloaders
@@ -25,7 +26,7 @@ criterion = torch.nn.MSELoss()
 # Evaluate the ensemble
 test_loss = 0
 with torch.no_grad():
-    for imgs, age, _, target in test_dataloader:
+    for imgs, age, _, target in tqdm.tqdm(test_dataloader):
         imgs = imgs.to(device)
         age = age.to(device)
         target = target.to(device)
@@ -34,7 +35,7 @@ with torch.no_grad():
         output2 = model2(imgs, age)
 
         # Average the predictions of the two models
-        ensemble_output = (output1 + output2) / 2.0
+        ensemble_output = output1*0.35 + output2 * 0.65
 
         loss = criterion(ensemble_output, target)
         test_loss += loss.item()
