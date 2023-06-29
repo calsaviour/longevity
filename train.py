@@ -74,7 +74,7 @@ if __name__ == '__main__':
     set_seed(SEED)
     train_dataloader, test_dataloader = get_dataloaders()
 
-    model = DenseNetFaceAgeModel().to(device)
+    model = FaceAgeModel().to(device)
 
     criterion = torch.nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=LR)
