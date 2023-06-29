@@ -57,3 +57,29 @@ class FaceAgeModel(nn.Module):
         x = self.fc2(x)
         return x
 
+
+class DenseNetFaceAgeModel(nn.Module):
+    def __init__(self):
+        super(DenseNetFaceAgeModel, self).__init__()
+
+        # Load pretrained DenseNet-121
+        self.base_model = models.densenet121(pretrained=True)
+        for param in self.base_model.parameters():
+            param.requires_grad = False
+        
+        self.base_model.classifier = nn.Identity()  # Remove the classifier part of DenseNet
+        
+        # New layers
+        self.fc1 = nn.Linear(1024+1, 512)  # 1024 for densenet features + 1 for age
+        self.dropout = nn.Dropout(0.2)
+        self.fc2 = nn.Linear(512, 128)
+        self.fc3 = nn.Linear(128, 1)
+
+    def forward(self, img, age):
+        x1 = self.base_model(img)
+        x = torch.cat((x1, age), dim=1)
+        x = torch.relu(self.fc1(x))
+        x = self.dropout(x)
+        x = torch.relu(self.fc2(x))
+        x = self.fc3(x)
+        return x

@@ -2,6 +2,7 @@ import tqdm
 import glob
 import torch
 import matplotlib.pyplot as plt
+from datetime import datetime
 import random
 import numpy as np
 from torch.utils.data import DataLoader, random_split, Subset
@@ -17,7 +18,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 N_EPOCHS = 25
 SEED = 7457769
-LR = 1e-4
+LR = 1e-3 / 3
 BATCH_SIZE = 128
 TEST_SET_RATIO = 0.2
 
@@ -30,6 +31,13 @@ def set_seed(seed):
     np.random.seed(seed)
     random.seed(seed)
 
+
+def save_model(model, test_loss):
+    test_loss_str = str(test_loss).replace(".", "_")
+    timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    torch.save(model.state_dict(), f"models/best_model_{timestamp}_{test_loss_str}.pth")
+    print(f"New best model saved at epoch: {epoch+1} with Test Loss: {test_loss}")
+    
 
 def get_dataloaders():
     dataset = _generate_dataset()
@@ -74,6 +82,7 @@ if __name__ == '__main__':
     train_losses = []
     test_losses = []
 
+    best_test_loss = float('inf')
     # Training loop
     for epoch in range(N_EPOCHS):
         # Train
@@ -106,6 +115,10 @@ if __name__ == '__main__':
                 loss = criterion(output, target)
                 test_loss += loss.item()
         test_losses.append(test_loss)
+
+        if test_loss < best_test_loss:
+            best_test_loss = test_loss
+            save_model(model, test_loss)
         
         print(f"Epoch: {epoch+1}, Train Loss: {train_loss / len(train_dataloader)}, Test Loss: {test_loss / len(test_dataloader)}")
 
