@@ -17,7 +17,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 N_EPOCHS = 15
 SEED = 7457769
-LR = 1e-3
+LR = 1e-3 / 3
 BATCH_SIZE = 128
 TEST_SET_RATIO = 0.2
 
