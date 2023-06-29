@@ -8,7 +8,7 @@ import numpy as np
 from torch.utils.data import DataLoader, random_split, Subset
 import matplotlib.pyplot as plt
 
-from model import FaceAgeDataset, FaceAgeModel
+from model import FaceAgeDataset, FaceAgeModel, DenseNetFaceAgeModel
 
 import warnings
 warnings.simplefilter("ignore")
@@ -74,7 +74,7 @@ if __name__ == '__main__':
     set_seed(SEED)
     train_dataloader, test_dataloader = get_dataloaders()
 
-    model = FaceAgeModel().to(device)
+    model = DenseNetFaceAgeModel().to(device)
 
     criterion = torch.nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=LR)
@@ -118,8 +118,8 @@ if __name__ == '__main__':
 
         if test_loss < best_test_loss:
             best_test_loss = test_loss
-            save_model(model, test_loss/len(train_dataloader))
-        
+            save_model(model, test_loss/len(test_dataloader))
+
         print(f"Epoch: {epoch+1}, Train Loss: {train_loss / len(train_dataloader)}, Test Loss: {test_loss / len(test_dataloader)}")
 
     plt.plot(train_losses, 'r', label='train_loss')
