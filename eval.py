@@ -8,12 +8,12 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Load the saved model weights
 model1 = FaceAgeModel()
-model1.load_state_dict(torch.load('models/best_resnet_0_0111459337.pth', map_location=device))
+model1.load_state_dict(torch.load('models/best_unfrozen_resnet_0_008292407406200271.pth', map_location=device))
 model1 = model1.to(device)
 model1.eval()
 
 model2 = DenseNetFaceAgeModel()
-model2.load_state_dict(torch.load('models/best_densenet_0_0105631.pth', map_location=device))
+model2.load_state_dict(torch.load('models/best_unfrozen_densenet_0_0082840999184.pth', map_location=device))
 model2 = model2.to(device)
 model2.eval()
 
