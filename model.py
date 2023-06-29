@@ -46,6 +46,9 @@ class FaceAgeModel(nn.Module):
         for param in self.cnn.parameters():
             param.requires_grad = False
 
+        for param in self.cnn.layer4.parameters():
+            param.requires_grad = True
+
         self.cnn.fc = nn.Linear(self.cnn.fc.in_features, 500)
         self.fc1 = nn.Linear(501, 250)  # 500 for image features + 1 for age
         self.fc2 = nn.Linear(250, 1)
