@@ -13,7 +13,7 @@ model1 = model1.to(device)
 model1.eval()
 
 model2 = DenseNetFaceAgeModel()
-model2.load_state_dict(torch.load('models/best_unfrozen_densenet_0_0082840999184.pth', map_location=device))
+model2.load_state_dict(torch.load('models/best_unfrozen_densenet_blocks3n4_0_008193400267198723.pth', map_location=device))
 model2 = model2.to(device)
 model2.eval()
 
