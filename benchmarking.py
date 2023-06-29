@@ -10,19 +10,19 @@ if __name__ == '__main__':
     dataset = _generate_dataset()
     train_dataset, test_dataset = _get_train_test_split(dataset)
 
-    train_life_expectancies = [row[3].item() for row in train_dataset]
-    test_life_expectancies = [row[3].item() for row in test_dataset]
+    train_targets = [row[3].item() for row in train_dataset]
+    test_targets = [row[3].item() for row in test_dataset]
 
     #Compute MSE Loss of the mean of the training set
-    train_mean_life_expect = np.mean(train_life_expectancies)
+    train_mean_life_expect = np.mean(train_targets)
 
     mean_guess_tensor = torch.tensor([train_mean_life_expect]*len(test_life_expectancies))
     mean_guess_loss_on_test = MSELoss()(mean_guess_tensor,
                                         torch.tensor(test_life_expectancies))
 
     #Compute MSE Loss of random guesses between min and max of training set
-    min_life_expect = np.min(train_life_expectancies)
-    max_life_expect = np.max(train_life_expectancies)
+    min_life_expect = np.min(train_targets)
+    max_life_expect = np.max(train_targets)
 
     random_guesses = np.random.uniform(min_life_expect, max_life_expect, 
                                        len(test_life_expectancies))
