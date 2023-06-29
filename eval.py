@@ -1,6 +1,7 @@
 import torch
 from torch.utils.data import DataLoader
 from model import FaceAgeDataset, FaceAgeModel, DenseNetFaceAgeModel
+from train import get_dataloaders
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -16,7 +17,7 @@ model2 = model2.to(device)
 model2.eval()
 
 # Load the test set
-_, test_dataloader = get_dataloaders()  # You need to define this function or import from your script
+_, test_dataloader = get_dataloaders()
 
 # Define the loss
 criterion = torch.nn.MSELoss()
