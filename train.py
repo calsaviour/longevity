@@ -118,7 +118,7 @@ if __name__ == '__main__':
 
         if test_loss < best_test_loss:
             best_test_loss = test_loss
-            save_model(model, test_loss)
+            save_model(model, test_loss/len(train_dataloader))
         
         print(f"Epoch: {epoch+1}, Train Loss: {train_loss / len(train_dataloader)}, Test Loss: {test_loss / len(test_dataloader)}")
 
