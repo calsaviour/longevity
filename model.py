@@ -41,7 +41,6 @@ class FaceAgeDataset(Dataset):
 class ResNet(nn.Module):
     def __init__(self, pretrained=True):
         super(ResNet, self).__init__()
-        self.num_classes = num_classes
         self.pretrained = pretrained
 
     def _initialize_weights(self):
