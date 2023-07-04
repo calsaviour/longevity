@@ -1,6 +1,0 @@
-Abdul_Wadud_birth/1947_death/2022_data/1976
-AKA_birth
-
-Failure mode: sometimes there are two people in the picture... (seems quite rare, 1 in 70-ish)
-
-Thing I expect to go badly: a huge chunk of the dataset is old people, it would be best if it was half old people half young people...
