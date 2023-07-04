@@ -12,11 +12,11 @@ This could be a cool thing people use to get feedback on their own
 health.
 
 
-#Known limitations
+# Known limitations
 The dataset is heavily skewed towards older people, so I'm not sure how well it
 performs on pictures of younger people.
 
-#How to use this code
+# How to use this code
 The models are small enough that you can train on CPU, but I recommend running
 on a GPU (I did my training on a Quadro M4000, takes about 10 minutes for 15
 epochs which is more than enough).
