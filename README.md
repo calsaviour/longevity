@@ -37,7 +37,7 @@ some sort of information.
 that before doing more performance boosts it makes sense to put this behind a
 frontend to share with the world and see if there's any demand for this.
 
-Other possible problems: I haven't thought hard about data leakage, so maybe
+*Other possible problems*: I haven't thought hard about data leakage, so maybe
 something is off here.
 
 
@@ -56,7 +56,7 @@ The models are small enough that you can train on CPU, but I recommend running
 on a GPU (I did my training on a Quadro M4000, takes about 10 minutes for 15
 epochs which is more than enough).
 
-Some details on dataset cleaning: a lot of the results returned by the wikidata
+*Some details on dataset cleaning*: a lot of the results returned by the wikidata
 API (see exact query in ```dataset_generation/wikidata.py```) had pictures that
 were stamps of the person, not actual pictures. The way this came up is that
 when running the dataset generation / scraping code, the year of death and the
