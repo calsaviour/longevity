@@ -20,7 +20,10 @@ class FaceAgeDataset(Dataset):
     def __init__(self, image_paths, ages, life_expectancies):
         self.image_paths = image_paths
         self.ages = ages
-        self.targets = min_max_scale(life_expectancies)
+        self.mean_life_expectancy = np.mean(life_expectancies)
+        deltas = life_expectancies - self.mean_life_expectancy
+
+        self.targets = min_max_scale(deltas)
         self.life_expectancies = life_expectancies
 
     def __len__(self):
@@ -82,11 +85,9 @@ class ResNet101(ResNet):
             param.requires_grad = True
 
 
-
-
-class DenseNetFaceAgeModel(nn.Module):
+class DenseNet121(nn.Module):
     def __init__(self):
-        super(DenseNetFaceAgeModel, self).__init__()
+        super(DenseNet121, self).__init__()
 
         # Load pretrained DenseNet-121
         self.base_model = models.densenet121(pretrained=True)
