@@ -38,11 +38,11 @@ class FaceAgeDataset(Dataset):
         return img, torch.tensor([age]).float(), torch.tensor([life_expectancy]).float(), torch.tensor([target]).float()
 
 
-class FaceAgeModel(nn.Module):
+class ResNet(nn.Module):
     def __init__(self):
         super(FaceAgeModel, self).__init__()
 
-        self.cnn = models.resnet50(pretrained=True)
+        self.cnn = models.resnet101(pretrained=True)
         for param in self.cnn.parameters():
             param.requires_grad = False
 
