@@ -49,6 +49,11 @@ ensembling different pre-trained models improves performance.
 3. The target variable is a min-max scaled delta-life expectancy (subtracted
    the mean life expectancy, this is a big improvement on just predicting
 min-max scaled life expectancy).
+4. The loss function is mean squared error
+5. I use the function in ```interpretability.py``` to interpret the MSELoss as
+an accuracy in years. This seems broadly legit, but is an approximation (don't
+use test data to do the scaling-unscaling, also MSELoss obviously quite
+sensitive to outliers).
 
 The models are small enough that you can train on CPU, but I recommend running
 on a GPU (I did my training on a Quadro M4000, takes about 10 minutes for 15
@@ -62,6 +67,8 @@ year of the picture would be the same. It seems important to remove these data
 before using a new dataset, but I'm not sure what the performance hit would be
 from them. A ton of the wikidata results had pictures without a figure caption
 (so there is no picture date to scrape), so my dataset collection script is
-pretty inefficient because I didn't use SPARQL to filter these.
+pretty inefficient because I didn't use SPARQL to filter these. A last thing I
+did is look through the data for rows with crazy life expectancies and spotted
+a couple bad apples this way.
 
 
