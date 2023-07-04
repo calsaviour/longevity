@@ -1,3 +1,0 @@
-https://en.wikipedia.org/wiki/Henri_Boulad
-
-common failure mode: the date of birth and the date of picture are parsed as the same, delete all instances of this
