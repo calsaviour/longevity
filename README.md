@@ -40,7 +40,6 @@ frontend to share with the world and see if there's any demand for this.
 *Other possible problems*: I haven't thought hard about data leakage, so maybe
 something is off here.
 
-
 # High level technical overview
 1. [Wikidata's API](query.wikidata.org) to generate the dataset (plus a bit of
    scraping): dataset_v2 has ~5000 examples. I also have dataset_v3 with about
@@ -50,7 +49,6 @@ ensembling different pre-trained models improves performance.
 3. The target variable is a min-max scaled delta-life expectancy (subtracted
    the mean life expectancy, this is a big improvement on just predicting
 min-max scaled life expectancy).
-
 
 The models are small enough that you can train on CPU, but I recommend running
 on a GPU (I did my training on a Quadro M4000, takes about 10 minutes for 15
@@ -62,8 +60,8 @@ were stamps of the person, not actual pictures. The way this came up is that
 when running the dataset generation / scraping code, the year of death and the
 year of the picture would be the same. It seems important to remove these data
 before using a new dataset, but I'm not sure what the performance hit would be
-from them.
-
-
+from them. A ton of the wikidata results had pictures without a figure caption
+(so there is no picture date to scrape), so my dataset collection script is
+pretty inefficient because I didn't use SPARQL to filter these.
 
 
