@@ -10,3 +10,4 @@ dates of birth and death of the people in the picture. Then train a neural netwo
 
 This could be a cool thing people use to get feedback on their own
 health.
+
