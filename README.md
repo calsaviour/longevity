@@ -1,6 +1,3 @@
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-AMS_CHTML"></script>
-
 # Longevity prediction
 This project was inspired by an off-hand comment by Balaji Srinivasan in his
 [podcast with Lex
