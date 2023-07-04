@@ -27,8 +27,9 @@ something is off here.
 
 
 # High level technical overview
-1. I used query.wikidata.org to generate the dataset
-2. I used pre-trained models as the initialisation of my neural nets
+1. [Wikidata's API](query.wikidata.org) to generate the dataset
+2. I used pre-trained models as the initialisation of my neural nets,
+ensembling different pre-trained models improves performance.
 3. The target variable is a min-max scaled delta-life expectancy (subtracted
    the mean life expectancy, this is a big improvement on just predicting
 min-max scaled life expectancy).
