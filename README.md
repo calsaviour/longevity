@@ -33,7 +33,9 @@ only ever be accurate to the year).
 some sort of information.
 
 5. I've done very little optimization: there is a lot of room for performance
-   improvements
+   improvements: before doing this we need to adress point (2). I also think
+that before doing more performance boosts it makes sense to put this behind a
+frontend to share with the world and see if there's any demand for this.
 
 Other possible problems: I haven't thought hard about data leakage, so maybe
 something is off here.
