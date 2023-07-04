@@ -8,7 +8,7 @@ import numpy as np
 from torch.utils.data import DataLoader, random_split, Subset
 import matplotlib.pyplot as plt
 
-from model import FaceAgeDataset, ResNet, DenseNetFaceAgeModel
+from model import FaceAgeDataset, ResNet50, ResNet101, DenseNetFaceAgeModel
 
 import warnings
 warnings.simplefilter("ignore")
@@ -74,7 +74,7 @@ if __name__ == '__main__':
     set_seed(SEED)
     train_dataloader, test_dataloader = get_dataloaders()
 
-    model = DenseNetFaceAgeModel().to(device)
+    model = ResNet50().to(device)
 
     criterion = torch.nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=LR)

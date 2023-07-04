@@ -39,19 +39,15 @@ class FaceAgeDataset(Dataset):
 
 
 class ResNet(nn.Module):
-    def __init__(self):
-        super(FaceAgeModel, self).__init__()
+    def __init__(self, num_classes, pretrained=True):
+        super(ResNet, self).__init__()
+        self.num_classes = num_classes
+        self.pretrained = pretrained
 
-        self.cnn = models.resnet101(pretrained=True)
-        for param in self.cnn.parameters():
-            param.requires_grad = False
-
-        for param in self.cnn.layer4.parameters():
-            param.requires_grad = True
-
+    def _initialize_weights(self):
         self.cnn.fc = nn.Linear(self.cnn.fc.in_features, 500)
         self.fc1 = nn.Linear(501, 250)  # 500 for image features + 1 for age
-        self.fc2 = nn.Linear(250, 1)
+        self.fc2 = nn.Linear(250, self.num_classes)
 
     def forward(self, img, age):
         x1 = self.cnn(img)
@@ -59,6 +55,34 @@ class ResNet(nn.Module):
         x = torch.relu(self.fc1(x))
         x = self.fc2(x)
         return x
+
+
+class ResNet50(ResNet):
+    def __init__(self, num_classes, pretrained=True):
+        super(ResNet50, self).__init__(num_classes, pretrained)
+        self.cnn = models.resnet50(pretrained=self.pretrained)
+        self._initialize_weights()
+
+        for param in self.cnn.parameters():
+            param.requires_grad = False
+
+        for param in self.cnn.layer4.parameters():
+            param.requires_grad = True
+
+
+class ResNet101(ResNet):
+    def __init__(self, num_classes, pretrained=True):
+        super(ResNet101, self).__init__(num_classes, pretrained)
+        self.cnn = models.resnet101(pretrained=self.pretrained)
+        self._initialize_weights()
+
+        for param in self.cnn.parameters():
+            param.requires_grad = False
+
+        for param in self.cnn.layer4.parameters():
+            param.requires_grad = True
+
+
 
 
 class DenseNetFaceAgeModel(nn.Module):
