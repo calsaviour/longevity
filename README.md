@@ -19,6 +19,9 @@ performs on pictures of younger people.
 years (I didn't bother with the month or day of the year, so at best this can
 only ever be accurate to the year).
 
+3. I've done very little optimization: there is a lot of room for performance
+   improvements
+
 Other possible problems: I haven't thought hard about data leakage, so maybe
 something is off here.
 
@@ -26,6 +29,9 @@ something is off here.
 # High level technical overview
 1. I used query.wikidata.org to generate the dataset
 2. I used pre-trained models as the initialisation of my neural nets
+3. The target variable is a min-max scaled delta-life expectancy (subtracted
+   the mean life expectancy, this is a big improvement on just predicting
+min-max scaled life expectancy).
 
 
 The models are small enough that you can train on CPU, but I recommend running
