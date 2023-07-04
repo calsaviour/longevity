@@ -1,9 +1,12 @@
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-AMS_CHTML"></script>
+
 # Longevity prediction
 This project was inspired by an off-hand comment by Balaji Srinivasan in his
 [podcast with Lex
 Fridman](https://www.youtube.com/watch?v=VeH7qKZr0WI&ab_channel=LexFridman).
 
-F(picture of face, age) = life exectancy
+$$ F(picture of face, age) = life exectancy $$
 
 The methodology is to collect a large dataset of pictures of faces and their dates, along with the
 dates of birth and death of the people in the picture. Then train a neural network to predict age of death.
