@@ -13,8 +13,16 @@ health.
 
 
 # Known limitations
-The dataset is heavily skewed towards older people, so I'm not sure how well it
+1. The dataset is heavily skewed towards older people, so I'm not sure how well it
 performs on pictures of younger people.
+
+2. When generating the dataset I simplified myself the work so all dates are just
+years (I didn't bother with the month or day of the year, so at best this can
+only ever be accurate to the year).
+
+Other possible problems: I haven't thought hard about data leakage, so maybe
+something is off here.
+
 
 # How to use this code
 The models are small enough that you can train on CPU, but I recommend running
