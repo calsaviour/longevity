@@ -39,3 +39,10 @@ min-max scaled life expectancy).
 The models are small enough that you can train on CPU, but I recommend running
 on a GPU (I did my training on a Quadro M4000, takes about 10 minutes for 15
 epochs which is more than enough).
+
+# Performance
+A ResNet-50 gets to sub-1 year accuracy for life expectancy on the test set.
+
+| Model | Best test loss | Estimated precision (years) | Git hash |
+|---------|---------|---------|---------|
+| ResNet-50 (last block un-frozen)   | 0.007870   | 0.08   | 5e0fb47a6c00118495dca9ba6   |
