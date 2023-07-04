@@ -28,7 +28,11 @@ only ever be accurate to the year).
 3. Some pictures in the dataset (I estimate <2%) have more than one person in
    them, which is "corrupt" data.
 
-3. I've done very little optimization: there is a lot of room for performance
+4. Some of the pictures are in black and white, others are colored. I don't
+   think this is good because black and white pictures are older / might leak
+some sort of information.
+
+5. I've done very little optimization: there is a lot of room for performance
    improvements
 
 Other possible problems: I haven't thought hard about data leakage, so maybe
