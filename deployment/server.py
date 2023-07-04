@@ -8,7 +8,7 @@ from longevity.modelling.model import preprocess
 
 app = Flask(__name__)
 
-model = torch.load('longevity/deployments/model.pt')
+model = torch.load('deployment/model.pth')
 model.eval()
 
 @app.route('/predict', methods=['POST'])
