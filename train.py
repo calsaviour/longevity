@@ -8,7 +8,7 @@ import numpy as np
 from torch.utils.data import DataLoader, random_split, Subset
 import matplotlib.pyplot as plt
 
-from model import FaceAgeDataset, ResNet50, ResNet101, DenseNet121
+from model import FaceAgeDataset, ResNet50, ResNet101, DenseNet121, VGG16, EfficientNetB0
 
 import warnings
 warnings.simplefilter("ignore")

@@ -1,9 +1,10 @@
-import torch
+from efficientnet_pytorch import EfficientNet
 from torch import nn
 from torch.utils.data import Dataset
 from torchvision import models, transforms
 import cv2
 import numpy as np
+import torch
 
 from utils import min_max_scale
 
@@ -119,3 +120,63 @@ class DenseNet121(nn.Module):
         return x
 
 
+class VGG16(nn.Module):
+    def __init__(self, pretrained=True):
+        super(VGG16, self).__init__()
+
+        # Load pretrained VGG16
+        self.base_model = models.vgg16(pretrained=pretrained)
+        for param in self.base_model.parameters():
+            param.requires_grad = False
+
+        # Unfreeze the last few layers
+        for param in self.base_model.features[-4:].parameters():
+            param.requires_grad = True
+
+        self.base_model.classifier = nn.Identity()  # Remove the classifier part of VGG16
+        
+        # New layers
+        self.fc1 = nn.Linear(512+1, 256)  # 512 for vgg16 features + 1 for age
+        self.dropout = nn.Dropout(0.2)
+        self.fc2 = nn.Linear(256, 128)
+        self.fc3 = nn.Linear(128, 1)
+
+    def forward(self, img, age):
+        x1 = self.base_model(img)
+        x = torch.cat((x1.view(x1.size(0), -1), age), dim=1)
+        x = torch.relu(self.fc1(x))
+        x = self.dropout(x)
+        x = torch.relu(self.fc2(x))
+        x = self.fc3(x)
+        return x
+
+
+class EfficientNetB0(nn.Module):
+    def __init__(self):
+        super(EfficientNetB0, self).__init__()
+
+        # Load pretrained EfficientNet
+        self.base_model = EfficientNet.from_pretrained('efficientnet-b0')
+        for param in self.base_model.parameters():
+            param.requires_grad = False
+
+        # Unfreeze the last stage
+        for param in self.base_model._blocks[-5:].parameters():
+            param.requires_grad = True
+
+        self.base_model._fc = nn.Identity()  # Remove the classifier part of EfficientNet
+
+        # New layers
+        self.fc1 = nn.Linear(1280+1, 640)  # 1280 for efficientnet features + 1 for age
+        self.dropout = nn.Dropout(0.2)
+        self.fc2 = nn.Linear(640, 320)
+        self.fc3 = nn.Linear(320, 1)
+
+    def forward(self, img, age):
+        x1 = self.base_model(img)
+        x = torch.cat((x1, age), dim=1)
+        x = torch.relu(self.fc1(x))
+        x = self.dropout(x)
+        x = torch.relu(self.fc2(x))
+        x = self.fc3(x)
+        return x
