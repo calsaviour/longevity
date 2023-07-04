@@ -39,7 +39,7 @@ class FaceAgeDataset(Dataset):
 
 
 class ResNet(nn.Module):
-    def __init__(self, num_classes, pretrained=True):
+    def __init__(self, pretrained=True):
         super(ResNet, self).__init__()
         self.num_classes = num_classes
         self.pretrained = pretrained
@@ -47,7 +47,7 @@ class ResNet(nn.Module):
     def _initialize_weights(self):
         self.cnn.fc = nn.Linear(self.cnn.fc.in_features, 500)
         self.fc1 = nn.Linear(501, 250)  # 500 for image features + 1 for age
-        self.fc2 = nn.Linear(250, self.num_classes)
+        self.fc2 = nn.Linear(250, 1)
 
     def forward(self, img, age):
         x1 = self.cnn(img)
@@ -58,8 +58,8 @@ class ResNet(nn.Module):
 
 
 class ResNet50(ResNet):
-    def __init__(self, num_classes, pretrained=True):
-        super(ResNet50, self).__init__(num_classes, pretrained)
+    def __init__(self, pretrained=True):
+        super(ResNet50, self).__init__(pretrained)
         self.cnn = models.resnet50(pretrained=self.pretrained)
         self._initialize_weights()
 
@@ -71,8 +71,8 @@ class ResNet50(ResNet):
 
 
 class ResNet101(ResNet):
-    def __init__(self, num_classes, pretrained=True):
-        super(ResNet101, self).__init__(num_classes, pretrained)
+    def __init__(self, pretrained=True):
+        super(ResNet101, self).__init__(pretrained)
         self.cnn = models.resnet101(pretrained=self.pretrained)
         self._initialize_weights()
 
