@@ -4,11 +4,12 @@ import torchvision.transforms as transforms
 from PIL import Image
 import io
 
-from longevity.modelling.model import preprocess
+from longevity.modelling.model import preprocess, ResNet50
 
 app = Flask(__name__)
 
-model = torch.load('deployment/model.pth')
+model = ResNet50()
+model.load_state_dict(torch.load('deployment/model.pth', map_location=torch.device('cpu')))
 model.eval()
 
 @app.route('/predict', methods=['POST'])

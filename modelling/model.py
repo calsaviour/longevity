@@ -6,7 +6,7 @@ import cv2
 import numpy as np
 import torch
 
-from utils import min_max_scale
+from modelling.utils import min_max_scale
 
 # Preprocessing for images
 preprocess = transforms.Compose([
