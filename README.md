@@ -20,7 +20,7 @@ performs on pictures of younger people.
 
 2. When generating the dataset I simplified myself the work so all dates are just
 years (I didn't bother with the month or day of the year, so at best this can
-only ever be accurate to the year).
+only ever be accurate to the year, this is easy to change however).
 
 3. Some pictures in the dataset (I estimate <2%) have more than one person in
    them, which is "corrupt" data.
