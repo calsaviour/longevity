@@ -8,7 +8,7 @@ import numpy as np
 from torch.utils.data import DataLoader, random_split, Subset
 import matplotlib.pyplot as plt
 
-from model import FaceAgeDataset, ResNet50, ResNet101, DenseNet121, VGG16, EfficientNetB0
+from modelling.model import FaceAgeDataset, ResNet50
 
 import warnings
 warnings.simplefilter("ignore")
@@ -40,15 +40,15 @@ def save_model(model, test_loss):
     
 
 def get_dataloaders():
-    dataset = _generate_dataset()
+    dataset = generate_dataset()
     train_dataset, test_dataset = _get_train_test_split(dataset)
     train_dataloader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True)
     test_dataloader = DataLoader(test_dataset, batch_size=1, shuffle=False)
     return train_dataloader, test_dataloader
 
 
-def _generate_dataset():
-    image_paths = np.array(glob.glob('datasets/dataset_v2/*.jpg'))
+def generate_dataset():
+    image_paths = np.array(glob.glob('modelling/datasets/dataset_v2/*.jpg'))
     image_dates = np.array([int(p.split('data:')[-1][:-4]) for p in image_paths])
     death_dates = np.array([int(p.split('death:')[-1][:4]) for p in image_paths])
     birth_dates = np.array([int(p.split('birth:')[-1][:4]) for p in image_paths])

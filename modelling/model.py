@@ -22,9 +22,9 @@ class FaceAgeDataset(Dataset):
         self.image_paths = image_paths
         self.ages = ages
         self.mean_life_expectancy = np.mean(life_expectancies)
-        deltas = life_expectancies - self.mean_life_expectancy
+        self.deltas = life_expectancies - self.mean_life_expectancy
 
-        self.targets = min_max_scale(deltas)
+        self.targets = min_max_scale(self.deltas)
         self.life_expectancies = life_expectancies
 
     def __len__(self):

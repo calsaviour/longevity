@@ -1,20 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import Camera from './Camera';
+import TypingAnimation from './TypingAnimation';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Camera />
+    <View>  
+     <View style={{marginTop: '22%', alignItems: 'center'}}>
+   	<TypingAnimation text="Predict your life expectancy." />
+     </View>
+    <View style={{marginTop: '15%', alignItems: 'center'}}>
+	<Camera/>
+    </View>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-  },
-});
